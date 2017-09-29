@@ -1,0 +1,51 @@
+C:\Users\advance\Desktop\ServiceWebAsp\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Users\advance\Desktop\ServiceWebAsp\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Users\advance\Desktop\ServiceWebAsp\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\Users\advance\Desktop\ServiceWebAsp\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Users\advance\Desktop\ServiceWebAsp\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\PROYECTOS_ANDROID\Android Conexion a BD sqlServer mediante web services\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\PROYECTOS_ANDROID\Android Conexion a BD sqlServer mediante web services\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\PROYECTOS_ANDROID\Android Conexion a BD sqlServer mediante web services\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\PROYECTOS_ANDROID\Android Conexion a BD sqlServer mediante web services\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\PROYECTOS_ANDROID\Android Conexion a BD sqlServer mediante web services\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Publico\PROYECTOS\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Publico\PROYECTOS\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Publico\PROYECTOS\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\Publico\PROYECTOS\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\Publico\PROYECTOS\PROYECTOS_ANDROID\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\DANIEL\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\DANIEL\PROYECTOS\PROYECTO COLIMA\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\DGOI\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Users\blackman\Desktop\SSP-C4\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csproj.CoreCompileInputs.cache
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
