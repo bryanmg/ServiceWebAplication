@@ -57,7 +57,7 @@ namespace ServiceWebAplicacion
             return msje;
         }
 
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Image1, String Image2, String Image3, String Image4, String Image5, String Image6, Byte[] video)
+        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount)
         {
             SqlCommand cmd;
             int res = 1;
@@ -72,17 +72,19 @@ namespace ServiceWebAplicacion
                 cmd.Parameters.AddWithValue("@catId", catId);
                 cmd.Parameters.AddWithValue("@NumSafety", NumSafety);
                 cmd.Parameters.AddWithValue("@descripcion", descripcion);
-                cmd.Parameters.AddWithValue("@fecha", System.DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
+                cmd.Parameters.AddWithValue("@fecha", DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
                 cmd.Parameters.AddWithValue("@USU_id", usuario);
                 //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
-                cmd.Parameters.AddWithValue("@Image1", Image1);
-                cmd.Parameters.AddWithValue("@Image2", Image2);
-                cmd.Parameters.AddWithValue("@Image3", Image3);
-                cmd.Parameters.AddWithValue("@Image4", Image4);
-                cmd.Parameters.AddWithValue("@Image5", Image5);
-                cmd.Parameters.AddWithValue("@Image6", Image6);
+                cmd.Parameters.AddWithValue("@Data1", Data1);
+                cmd.Parameters.AddWithValue("@Data2", Data2);
+                cmd.Parameters.AddWithValue("@Data3", Data3);
+                cmd.Parameters.AddWithValue("@Data4", Data4);
+                cmd.Parameters.AddWithValue("@Data5", Data5);
+                cmd.Parameters.AddWithValue("@Data6", Data6);
+                cmd.Parameters.AddWithValue("@imgCount", imgCount);
+                cmd.Parameters.AddWithValue("@vdCount", vdCount);
                 cmd.Parameters.Add("@msj", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
 
 
