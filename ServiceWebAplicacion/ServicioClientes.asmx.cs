@@ -36,19 +36,21 @@ namespace ServiceWebAplicacion
         }
         
         [WebMethod]
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount/*, String nameVideo, byte[] dataVideo*/)
+        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount)
         {
             string retorno = "";   
             //GUARDANDO EL VIDEO      
             try{
                 /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/       
                 for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {
-                    string nameVideo = usuario +"_"+ i+"_"+ Convert.ToString(DateTime.Now);
+                    Random rnd = new Random();
+                    string nameVideo = usuario.ToString() +"_"+ i+"_"+Convert.ToString(rnd.Next(1,100))+".mp4";
                     switch (i) {
                         case 1:
                             byte[] Video1 = Encoding.ASCII.GetBytes(Data1);
-                            String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video
-                            File.WriteAllBytes(arquivo1, Video1);   //se carga el video al servidor
+                            String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
+                            //File.WriteAllBytes(arquivo1, Video1);   //se carga el video al servidor
+                            System.IO.File.WriteAllBytes(arquivo1, Video1);
                             Data1 = nameVideo; //para enviarlo a la BD
                             break;
                         case 2:
@@ -150,20 +152,22 @@ namespace ServiceWebAplicacion
             msje = con.CargaAlerta(usu, latitud, longitud,  Image1,  Image2, Image3);
 
             return msje;
-        }   
+        }
 
-        /*[WebMethod]
-        public string GetFile(String nameVideo, byte[] dataVideo)
-        {                              
-            try{                                  
-                String arquivo = Server.MapPath("~/VideoData/") + nameVideo;  
-                /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*
-                File.WriteAllBytes(arquivo, dataVideo);
-                return "1";
-            }
-            catch (Exception ex) {     
-                return ex.Message ;  
-            }   
-        }  */
+        [WebMethod]
+        public String Find_QPhone(String date, String description, String Nosafety, int selection)
+        {
+            String data;
+            data = con.Find_QPhone(date, description, Nosafety, selection);
+            return data;
+        }
+
+        [WebMethod]
+        public String Picture_Alerts(String id)
+        {
+            String data;
+            data = con.Picture_Alerts(id);
+            return data;
+        }
     }
 }

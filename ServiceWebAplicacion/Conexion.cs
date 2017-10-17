@@ -2,9 +2,10 @@
 using System.Data.SqlClient;
 using System.Data;                
 using System.Web.Script.Serialization;  
-using System.Collections;      
+using System.Collections;  
+using Newtonsoft.Json;
 
-
+                                                                                     
 namespace ServiceWebAplicacion
 {
 
@@ -183,8 +184,8 @@ namespace ServiceWebAplicacion
                 cmd.Parameters.AddWithValue("@usu", usu);
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
-                cmd.Parameters.AddWithValue("@fecha", System.DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
-                                                                           //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
+                cmd.Parameters.AddWithValue("@fecha", DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
+                //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
                 cmd.Parameters.AddWithValue("@Image1", Image1);
                 cmd.Parameters.AddWithValue("@Image2", Image2);
                 cmd.Parameters.AddWithValue("@Image3", Image3);
@@ -199,6 +200,62 @@ namespace ServiceWebAplicacion
             }
             return msj;
 
-        }     
+        }
+
+        //retorna consultas desde celular
+        public String Find_QPhone(String date, String description, String Nosafety, int selection)//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
+        {
+            DataSet myDataSet = new DataSet();
+            string jsonVa;      
+            SqlCommand cmd;
+            try
+            {                       
+                cmd = new SqlCommand("Query_phone", con);      
+                //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
+                cmd.Parameters.AddWithValue("@date", date);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@Nosafety", Nosafety);
+                cmd.Parameters.AddWithValue("@selection", selection);               
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;  
+                da.Fill(myDataSet);                                                      
+
+                jsonVa = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }        
+            return jsonVa;
+        }
+
+        //Retorna imagenes de alertas
+        public String Picture_Alerts(String id)
+        {
+            DataSet myDataSet = new DataSet();
+            string data;
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("Return_Picture", con);                           
+                cmd.Parameters.AddWithValue("@id", id);          
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(myDataSet);
+
+                data = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }
