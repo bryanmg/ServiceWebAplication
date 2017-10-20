@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Web.Services;
-using System.Text;
-using System.Xml.Serialization;       
+using System.Text;                
+using System.Web;
 
 namespace ServiceWebAplicacion
 {
@@ -11,7 +11,7 @@ namespace ServiceWebAplicacion
     [WebService(Namespace = "http://colorganic-002-site5.itempurl.com/")]   //puedes cambiar esta direccion
     //[WebService(Namespace = "http://localhost/ServicioClientes.asmx")]   //puedes cambiar esta direccion
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
+    [System.ComponentModel.ToolboxItem(false)]   
     // Para permitir que se llame a este servicio Web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     //[System.Web.Script.Services.ScriptService]
 
@@ -38,19 +38,36 @@ namespace ServiceWebAplicacion
         [WebMethod]
         public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount)
         {
+            //Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
             string retorno = "";   
             //GUARDANDO EL VIDEO      
-            try{
-                /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/       
+            try{                 
+                string pathToCreate = "~/VideoData/";
+                if ( Directory.Exists(Server.MapPath(pathToCreate)) ){}
+                else {
+                    Directory.CreateDirectory(Server.MapPath(pathToCreate));
+                }                          
+
+                /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/
+                
                 for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {
-                    Random rnd = new Random();
-                    string nameVideo = usuario.ToString() +"_"+ i+"_"+Convert.ToString(rnd.Next(1,100))+".mp4";
+                    //Random rnd = new Random();
+                    string nameVideo = usuario.ToString() + "_" + i + "_" + DateTime.Now.ToString("dd-MM-yyyy H-mm-ss") + ".mp4";
+                    //string nameVideo = usuario.ToString() +"_"+ i+"_"+Convert.ToString(rnd.Next(1,100))+".mp4";
                     switch (i) {
                         case 1:
                             byte[] Video1 = Encoding.ASCII.GetBytes(Data1);
-                            String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
-                            //File.WriteAllBytes(arquivo1, Video1);   //se carga el video al servidor
-                            System.IO.File.WriteAllBytes(arquivo1, Video1);
+                            String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") 
+                            //File.WriteAllBytes(arquivo1, Video1); //se carga el video al servidor
+                            //var path = Server.MapPath("~/App_Data/file.txt");
+                            File.SetAttributes(arquivo1, FileAttributes.Normal);
+                            File.WriteAllBytes(arquivo1, Video1); //se carga el video al servidor
+                            /*using (StreamWriter _testData = new StreamWriter(Server.MapPath("~/VideoData/"), true))
+                            {
+                                
+                                _testData.WriteLine(Video1); // Write the file.
+                            }  */
+                            
                             Data1 = nameVideo; //para enviarlo a la BD
                             break;
                         case 2:
@@ -98,8 +115,9 @@ namespace ServiceWebAplicacion
                         {
                             case 1:
                                 file = "~/VideoData/" + Data1;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file))){
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }                        
                                 break;
                             case 2:
                                 file = "~/VideoData/" + Data2;
@@ -146,10 +164,10 @@ namespace ServiceWebAplicacion
         }
 
         [WebMethod]
-        public string CargaAlerta(string usu, string latitud, string longitud, string Image1, string Image2, String Image3)
+        public string CargaAlerta(string usu, string descripcion, string latitud, string longitud, String Image1, String Image2, String Image3)
         {
             string msje = "";
-            msje = con.CargaAlerta(usu, latitud, longitud,  Image1,  Image2, Image3);
+            msje = con.CargaAlerta(usu, descripcion, latitud, longitud,  Image1,  Image2, Image3);
 
             return msje;
         }

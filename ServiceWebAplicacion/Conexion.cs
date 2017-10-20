@@ -72,8 +72,7 @@ namespace ServiceWebAplicacion
                 //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
                 cmd.Parameters.AddWithValue("@catId", catId);
                 cmd.Parameters.AddWithValue("@NumSafety", NumSafety);
-                cmd.Parameters.AddWithValue("@descripcion", descripcion);
-                cmd.Parameters.AddWithValue("@fecha", DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
+                cmd.Parameters.AddWithValue("@descripcion", descripcion);                                      
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
                 cmd.Parameters.AddWithValue("@USU_id", usuario);
@@ -170,7 +169,7 @@ namespace ServiceWebAplicacion
             return jsonDES;
         }
 
-        public string CargaAlerta(string usu, string latitud, string longitud, string Image1, string Image2, String Image3)
+        public string CargaAlerta(string usu, string descripcion, string latitud, string longitud, String Image1, String Image2, String Image3)
         {
             SqlCommand cmd;
             string msj = "";
@@ -178,19 +177,20 @@ namespace ServiceWebAplicacion
             {
                 Abrir();
 
-                cmd = new SqlCommand("Carga_Alerta", con);//LLAMAMOS AL ESTORED PROCEDURE Y CREAMOS LA CONEXION EN LA BD
+                cmd = new SqlCommand("CargaAlerta", con);//LLAMAMOS AL ESTORED PROCEDURE Y CREAMOS LA CONEXION EN LA BD
                 cmd.CommandType = CommandType.StoredProcedure;
                 //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
                 cmd.Parameters.AddWithValue("@usu", usu);
+                cmd.Parameters.AddWithValue("@descripcion", descripcion);
                 cmd.Parameters.AddWithValue("@latitud", latitud);
-                cmd.Parameters.AddWithValue("@longitud", longitud);
-                cmd.Parameters.AddWithValue("@fecha", DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
+                cmd.Parameters.AddWithValue("@longitud", longitud);                                          
                 //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
                 cmd.Parameters.AddWithValue("@Image1", Image1);
                 cmd.Parameters.AddWithValue("@Image2", Image2);
                 cmd.Parameters.AddWithValue("@Image3", Image3);
                 cmd.Parameters.Add("@msj", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
                 //EJECUTAMOS EL METODO Y CACHAMOS EL RESULTADO
+                int res = cmd.ExecuteNonQuery();
                 msj = cmd.Parameters["@msj"].Value.ToString();
                 Cerrar();
             }
