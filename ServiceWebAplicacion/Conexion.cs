@@ -58,7 +58,7 @@ namespace ServiceWebAplicacion
             return msje;
         }
 
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount)
+        public int InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, int imgCount, int vdCount)
         {
             SqlCommand cmd;
             int res = 1;
@@ -98,7 +98,7 @@ namespace ServiceWebAplicacion
             {
                 throw ex;
             }
-            return msj;
+            return res;
         }
         public String CatalogoJSONid()//metodo para obtener el catalogo de tipos de incidentes y sus ID
         {
@@ -169,10 +169,11 @@ namespace ServiceWebAplicacion
             return jsonDES;
         }
 
-        public string CargaAlerta(string usu, string descripcion, string latitud, string longitud, String Image1, String Image2, String Image3)
+        public string CargaAlerta(int usu, String descripcion, String latitud, String longitud, String Image1, String Image2, String Image3)
         {
             SqlCommand cmd;
             string msj = "";
+            int res;
             try
             {
                 Abrir();
@@ -190,7 +191,7 @@ namespace ServiceWebAplicacion
                 cmd.Parameters.AddWithValue("@Image3", Image3);
                 cmd.Parameters.Add("@msj", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
                 //EJECUTAMOS EL METODO Y CACHAMOS EL RESULTADO
-                int res = cmd.ExecuteNonQuery();
+                res = cmd.ExecuteNonQuery();
                 msj = cmd.Parameters["@msj"].Value.ToString();
                 Cerrar();
             }
@@ -233,7 +234,7 @@ namespace ServiceWebAplicacion
         }
 
         //Retorna imagenes de alertas
-        public String Picture_Alerts(String id)
+        public String Picture_Alerts(String id, int flag)
         {
             DataSet myDataSet = new DataSet();
             string data;
@@ -241,7 +242,8 @@ namespace ServiceWebAplicacion
             try
             {
                 cmd = new SqlCommand("Return_Picture", con);                           
-                cmd.Parameters.AddWithValue("@id", id);          
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@flag", flag);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataAdapter da = new SqlDataAdapter();

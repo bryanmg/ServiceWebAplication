@@ -3,22 +3,34 @@ using System.IO;
 using System.Web.Services;
 using System.Text;                
 using System.Web;
+using System.Security.AccessControl;
 
 namespace ServiceWebAplicacion
 {
-    
+
     /// <summary>
     [WebService(Namespace = "http://colorganic-002-site5.itempurl.com/")]   //puedes cambiar esta direccion
     //[WebService(Namespace = "http://localhost/ServicioClientes.asmx")]   //puedes cambiar esta direccion
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]   
+    [System.ComponentModel.ToolboxItem(false)]
     // Para permitir que se llame a este servicio Web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     //[System.Web.Script.Services.ScriptService]
+    
 
-    public class ServicioClientes : System.Web.Services.WebService
+    public class ServicioClientes : WebService
     {
+       /* protected void Page_Load()
+        {
+            Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
+            DirectoryInfo directory = new DirectoryInfo("~/VideoData/");
+            DirectorySecurity security = directory.GetAccessControl();
+
+            security.AddAccessRule(new FileSystemAccessRule("", FileSystemRights.Modify, AccessControlType.Deny));
+
+            directory.SetAccessControl(security);
+        }    */
         //hace referencia a la clase conexion, ahi esta la cadena de conexion y nuestros metodos
-        Conexion con = new Conexion();  
+        Conexion con = new Conexion();    
 
         [WebMethod]
         public String CatalogoJSONid()
@@ -31,25 +43,27 @@ namespace ServiceWebAplicacion
         public String CatalogoJSONdes()
         {
             string json = "";
-            json = con.CatalogoJSONdes();
+            json = con.CatalogoJSONdes();   
             return json;
         }
         
         [WebMethod]
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, byte imgCount, byte vdCount)
+        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, int imgCount, int vdCount)
         {
-            //Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
-            string retorno = "";   
+            Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
+            int retorno;
+            retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, Data1, Data2, Data3, Data4, Data5, Data6, imgCount, vdCount);
             //GUARDANDO EL VIDEO      
-            try{                 
-                string pathToCreate = "~/VideoData/";
+            try
+            {                 
+                /*string pathToCreate = "~/VideoData/";
                 if ( Directory.Exists(Server.MapPath(pathToCreate)) ){}
                 else {
                     Directory.CreateDirectory(Server.MapPath(pathToCreate));
-                }                          
-
+                }
+                string path = System.Web.Configuration.WebConfigurationManager.AppSettings["myFilePath"].ToString();
                 /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/
-                
+
                 for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {
                     //Random rnd = new Random();
                     string nameVideo = usuario.ToString() + "_" + i + "_" + DateTime.Now.ToString("dd-MM-yyyy H-mm-ss") + ".mp4";
@@ -101,11 +115,11 @@ namespace ServiceWebAplicacion
                             Data6 = nameVideo;
                             break;
                     }
-                } 
+                }       
                 retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, Data1, Data2, Data3, Data4, Data5, Data6, imgCount, vdCount);
-                //return retorno;
-                if (retorno.Equals("1")) {
-                    return retorno;
+                //return Convert.ToString(retorno);
+                if (retorno == 1) {
+                    return Convert.ToString(retorno);
                 }else{
                     for (int i = (imgCount + 1); i <= (imgCount + vdCount); i++)
                     {
@@ -146,7 +160,7 @@ namespace ServiceWebAplicacion
                                 break;
                         }
                     }
-                    return "0";
+                    return Convert.ToString(retorno);
                 }
             }
             catch (Exception ex){
@@ -164,12 +178,11 @@ namespace ServiceWebAplicacion
         }
 
         [WebMethod]
-        public string CargaAlerta(string usu, string descripcion, string latitud, string longitud, String Image1, String Image2, String Image3)
+        public string CargaAlerta(int usu, String descripcion, String latitud, String longitud, String Image1, String Image2, String Image3)
         {
-            string msje = "";
-            msje = con.CargaAlerta(usu, descripcion, latitud, longitud,  Image1,  Image2, Image3);
-
-            return msje;
+            string res = "";
+            res = con.CargaAlerta(usu, descripcion, latitud, longitud,  Image1,  Image2, Image3);
+            return res;
         }
 
         [WebMethod]
@@ -181,10 +194,10 @@ namespace ServiceWebAplicacion
         }
 
         [WebMethod]
-        public String Picture_Alerts(String id)
+        public String Picture_Alerts(String id, int flag)
         {
             String data;
-            data = con.Picture_Alerts(id);
+            data = con.Picture_Alerts(id, flag);
             return data;
         }
     }
