@@ -2,8 +2,7 @@
 using System.IO;
 using System.Web.Services;
 using System.Text;                
-using System.Web;
-using System.Security.AccessControl;
+using System.Web;                     
 
 namespace ServiceWebAplicacion
 {
@@ -18,107 +17,78 @@ namespace ServiceWebAplicacion
     
 
     public class ServicioClientes : WebService
-    {
-       /* protected void Page_Load()
-        {
-            Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
-            DirectoryInfo directory = new DirectoryInfo("~/VideoData/");
-            DirectorySecurity security = directory.GetAccessControl();
-
-            security.AddAccessRule(new FileSystemAccessRule("", FileSystemRights.Modify, AccessControlType.Deny));
-
-            directory.SetAccessControl(security);
-        }    */
+    {   
         //hace referencia a la clase conexion, ahi esta la cadena de conexion y nuestros metodos
         Conexion con = new Conexion();    
-
+         
         [WebMethod]
-        public String CatalogoJSONid()
+        public String CatalogoJSON()
         {
             string json = "";
-            json = con.CatalogoJSONid();
+            json = con.CatalogoJSON();
             return json;
-        }
-        [WebMethod]
-        public String CatalogoJSONdes()
-        {
-            string json = "";
-            json = con.CatalogoJSONdes();   
-            return json;
-        }
+        }  
         
         [WebMethod]
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, int imgCount, int vdCount)
+        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, byte[] Data1, byte[] Data2, byte[] Data3, byte[] Data4, byte[] Data5, byte[] Data6, int imgCount, int vdCount)
         {
-            Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
-            int retorno;
-            retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, Data1, Data2, Data3, Data4, Data5, Data6, imgCount, vdCount);
+            //Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
+            string retorno;
+            int media = 0;
+            if (imgCount > 0) { media = 1; }
+            if (vdCount > 0) { media = 2; }
+            if (imgCount > 0 && vdCount > 0) { media = 3; }                       
+
             //GUARDANDO EL VIDEO      
             try
-            {                 
-                /*string pathToCreate = "~/VideoData/";
-                if ( Directory.Exists(Server.MapPath(pathToCreate)) ){}
-                else {
-                    Directory.CreateDirectory(Server.MapPath(pathToCreate));
-                }
-                string path = System.Web.Configuration.WebConfigurationManager.AppSettings["myFilePath"].ToString();
+            {      
                 /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/
 
-                for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {
-                    //Random rnd = new Random();
+                for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {                
                     string nameVideo = usuario.ToString() + "_" + i + "_" + DateTime.Now.ToString("dd-MM-yyyy H-mm-ss") + ".mp4";
-                    //string nameVideo = usuario.ToString() +"_"+ i+"_"+Convert.ToString(rnd.Next(1,100))+".mp4";
+        
                     switch (i) {
                         case 1:
-                            byte[] Video1 = Encoding.ASCII.GetBytes(Data1);
+                            //byte[] Video1 = Encoding.ASCII.GetBytes(Data1);
                             String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") 
-                            //File.WriteAllBytes(arquivo1, Video1); //se carga el video al servidor
-                            //var path = Server.MapPath("~/App_Data/file.txt");
-                            File.SetAttributes(arquivo1, FileAttributes.Normal);
-                            File.WriteAllBytes(arquivo1, Video1); //se carga el video al servidor
-                            /*using (StreamWriter _testData = new StreamWriter(Server.MapPath("~/VideoData/"), true))
-                            {
-                                
-                                _testData.WriteLine(Video1); // Write the file.
-                            }  */
-                            
-                            Data1 = nameVideo; //para enviarlo a la BD
+                            File.WriteAllBytes(arquivo1, Data1); //se carga el video al servidor  
+                            //Data1 = nameVideo; //para enviarlo a la BD 
                             break;
                         case 2:
-                            byte[] Video2 = Encoding.ASCII.GetBytes(Data2);
+                            //byte[] Video2 = Encoding.ASCII.GetBytes(Data2);
                             String arquivo2 = Server.MapPath("~/VideoData/") + nameVideo;
-                            File.WriteAllBytes(arquivo2, Video2);
-                            Data2 = nameVideo;
+                            File.WriteAllBytes(arquivo2, Data2);
+                            //Data2 = nameVideo;                 
                             break;
                         case 3:
-                            byte[] Video3 = Encoding.ASCII.GetBytes(Data3);
+                            //byte[] Video3 = Encoding.ASCII.GetBytes(Data3);
                             String arquivo3 = Server.MapPath("~/VideoData/") + nameVideo;
-                            File.WriteAllBytes(arquivo3, Video3);
-                            Data3 = nameVideo;
+                            File.WriteAllBytes(arquivo3, Data3);
+                            //Data3 = nameVideo;
                             break;
                         case 4:
-                            byte[] Video4 = Encoding.ASCII.GetBytes(Data4);
+                            //byte[] Video4 = Encoding.ASCII.GetBytes(Data4);
                             String arquivo4 = Server.MapPath("~/VideoData/") + nameVideo;
-                            File.WriteAllBytes(arquivo4, Video4);
-                            Data4 = nameVideo;
+                            File.WriteAllBytes(arquivo4, Data4);
+                            //Data4 = nameVideo;
                             break;
                         case 5:
-                            byte[] Video5 = Encoding.ASCII.GetBytes(Data5);
+                            //byte[] Video5 = Encoding.ASCII.GetBytes(Data5);
                             String arquivo5 = Server.MapPath("~/VideoData/") + nameVideo;
-                            File.WriteAllBytes(arquivo5, Video5);
-                            Data5 = nameVideo;
+                            File.WriteAllBytes(arquivo5, Data5);
+                            //Data5 = nameVideo;
                             break;
                         case 6:
-                            byte[] Video6 = Encoding.ASCII.GetBytes(Data6);
+                            //byte[] Video6 = Encoding.ASCII.GetBytes(Data6);
                             String arquivo6 = Server.MapPath("~/VideoData/") + nameVideo;
-                            File.WriteAllBytes(arquivo6, Video6);
-                            Data6 = nameVideo;
+                            File.WriteAllBytes(arquivo6, Data6);
+                            //Data6 = nameVideo;
                             break;
                     }
-                }       
-                retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, Data1, Data2, Data3, Data4, Data5, Data6, imgCount, vdCount);
-                //return Convert.ToString(retorno);
-                if (retorno == 1) {
+                }
+                retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, media, Convert.ToBase64String(Data1), Convert.ToBase64String(Data2), Convert.ToBase64String(Data3), Convert.ToBase64String(Data4), Convert.ToBase64String(Data5), Convert.ToBase64String(Data6), imgCount, vdCount);
+                   
+                if (Convert.ToInt32(retorno) == 1) {
                     return Convert.ToString(retorno);
                 }else{
                     for (int i = (imgCount + 1); i <= (imgCount + vdCount); i++)
@@ -158,9 +128,9 @@ namespace ServiceWebAplicacion
                                 if (File.Exists(file))
                                     File.Delete(file);
                                 break;
-                        }
+                        } 
                     }
-                    return Convert.ToString(retorno);
+                    return retorno;
                 }
             }
             catch (Exception ex){
@@ -181,7 +151,9 @@ namespace ServiceWebAplicacion
         public string CargaAlerta(int usu, String descripcion, String latitud, String longitud, String Image1, String Image2, String Image3)
         {
             string res = "";
-            res = con.CargaAlerta(usu, descripcion, latitud, longitud,  Image1,  Image2, Image3);
+            int media = 0;
+            if (Image1 != null) { media = 1; }
+            res = con.CargaAlerta(usu, descripcion, latitud, longitud, media,  Image1,  Image2, Image3);
             return res;
         }
 
