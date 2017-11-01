@@ -1,36 +1,52 @@
 ﻿using System;       
 using System.Data.SqlClient;
-using System.Data;                
-using System.Web.Script.Serialization;  
-using System.Collections;      
+using System.Data;       
+using System.Configuration;
+using Newtonsoft.Json;
 
-
+                                                                                     
 namespace ServiceWebAplicacion
 {
 
     public class Conexion
     {
-        SqlConnection con;
+        //SqlConnection con;                            
 
-        public Conexion()
+       
+           //   con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
+        private static string cnn = System.Configuration.ConfigurationManager.ConnectionStrings["Connsql"].ToString();
+        private static SqlConnection con;
+        //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Connsql"].ToString());
+    
+        public static Boolean Abrir()
         {
-            if (con == null)
-                //  con = new SqlConnection("Server=SQL5031.SmarterASP.NET;DataBase=DB_9B853E_Servicios;User Id=DB_9B853E_Servicios_admin;password=Leirdadacrca2017");
-                con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
-            //Data Source=SQL5017.SmarterASP.NET;Initial Catalog=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;Password=Leirdadacrca2017;" providerName="System.Data.SqlClient
-            //con = new SqlConnection("Server=LEONCIO1;DataBase=EJEMPLO;User Id=sa;password=1");
-            //con = new SqlConnection("Data Source=.;DataBase=ejemplo;Integrated Security=true");
-            //private static string cadenaConexion = @"Data Source=SQL5007.Smarterasp.net;Initial Catalog=DB_9B853E_REPUVE;User Id=DB_9B853E_REPUVE_admin;Password=Leirdadacrca2014;";
+            Boolean result = false;
+            try
+            {
+                con = new SqlConnection(cnn);
+                con.Open();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error-" + ex);
+            }
+            return result;
         }
 
-        public void Abrir()
+        public static Boolean Cerrar()
         {
-            if (con.State == ConnectionState.Closed) con.Open();
-        }
-
-        public void Cerrar()
-        {
-            if (con.State == ConnectionState.Open) con.Close();
+            Boolean result = false;
+            try
+            {
+                con.Close();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error-" + ex);
+            }
+            return result;
         }
 
         // METODOS
@@ -57,7 +73,7 @@ namespace ServiceWebAplicacion
             return msje;
         }
 
-        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, String Image1, String Image2, String Image3, String Image4, String Image5, String Image6, Byte[] video)
+        public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, int media, String Data1, String Data2, String Data3, String Data4, String Data5, String Data6, int imgCount, int vdCount)
         {
             SqlCommand cmd;
             int res = 1;
@@ -72,17 +88,19 @@ namespace ServiceWebAplicacion
                 cmd.Parameters.AddWithValue("@catId", catId);
                 cmd.Parameters.AddWithValue("@NumSafety", NumSafety);
                 cmd.Parameters.AddWithValue("@descripcion", descripcion);
-                cmd.Parameters.AddWithValue("@fecha", System.DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
                 cmd.Parameters.AddWithValue("@USU_id", usuario);
+                cmd.Parameters.AddWithValue("@media", media);
                 //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
-                cmd.Parameters.AddWithValue("@Image1", Image1);
-                cmd.Parameters.AddWithValue("@Image2", Image2);
-                cmd.Parameters.AddWithValue("@Image3", Image3);
-                cmd.Parameters.AddWithValue("@Image4", Image4);
-                cmd.Parameters.AddWithValue("@Image5", Image5);
-                cmd.Parameters.AddWithValue("@Image6", Image6);
+                cmd.Parameters.AddWithValue("@Data1", Data1);
+                cmd.Parameters.AddWithValue("@Data2", Data2);
+                cmd.Parameters.AddWithValue("@Data3", Data3);
+                cmd.Parameters.AddWithValue("@Data4", Data4);
+                cmd.Parameters.AddWithValue("@Data5", Data5);
+                cmd.Parameters.AddWithValue("@Data6", Data6);
+                cmd.Parameters.AddWithValue("@imgCount", imgCount);
+                cmd.Parameters.AddWithValue("@vdCount", vdCount);
                 cmd.Parameters.Add("@msj", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
 
 
@@ -98,65 +116,22 @@ namespace ServiceWebAplicacion
             }
             return msj;
         }
-        public String CatalogoJSONid()//metodo para obtener el catalogo de tipos de incidentes y sus ID
+
+        public String CatalogoJSON()//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
         {
-            var jsonID = "";
+            var json = "";
             SqlCommand cmd;
-            try {
-                con.Open();
-                string sql = "SELECT CAT_Id, CAT_Descripcion FROM CAT_Incidentes_Safety";
-                cmd = new SqlCommand(sql, con);
-                //comodin para poder llegar al dataset
-                SqlDataAdapter myAdapter = new SqlDataAdapter();
-                myAdapter.SelectCommand = cmd;
-
-                DataSet myDataSet = new DataSet();
-                myAdapter.Fill(myDataSet, "CAT_Descripcion");
-                //estos contendran las columnas ID y DES. del DataSet 
-                ArrayList myArrayID = new ArrayList();
-
-                foreach (DataRow dtRow in myDataSet.Tables["CAT_Descripcion"].Rows)
-                {
-                    myArrayID.Add(dtRow[0]);//obtenemos los ID del XML
-                }
-                var jsonSerialiser = new JavaScriptSerializer();
-                //serializamos los ArrayList obtenidos el DataSet
-                jsonID = jsonSerialiser.Serialize(myArrayID);
-
-                con.Close();
-            }
-            catch (Exception ex) {
-                throw ex;
-            }
-
-            return jsonID;
-        }
-        public String CatalogoJSONdes()//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
-        {
-            var jsonDES = "";
-            SqlCommand cmd;
+            DataSet myDataSet = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter();
             try
             {
                 con.Open();
                 string sql = "SELECT CAT_Id, CAT_Descripcion FROM CAT_Incidentes_Safety";
                 cmd = new SqlCommand(sql, con);
-                //comodin para poder llegar al dataset
-                SqlDataAdapter myAdapter = new SqlDataAdapter();
-                myAdapter.SelectCommand = cmd;
 
-                DataSet myDataSet = new DataSet();
-                myAdapter.Fill(myDataSet, "CAT_Descripcion");
-                //estos contendran las columnas ID y DES. del DataSet 
-                ArrayList myArrayDES = new ArrayList();
-
-                foreach (DataRow dtRow in myDataSet.Tables["CAT_Descripcion"].Rows)
-                {
-                    myArrayDES.Add(dtRow[1]);//obtenemos las DESCRIPCIONES del XML
-                }
-                var jsonSerialiser2 = new JavaScriptSerializer();
-                //serializamos los ArrayList obtenidos el DataSet
-                jsonDES = jsonSerialiser2.Serialize(myArrayDES);
-
+                da.SelectCommand = cmd;
+                da.Fill(myDataSet);
+                json = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
                 con.Close();
             }
             catch (Exception ex)
@@ -164,30 +139,33 @@ namespace ServiceWebAplicacion
                 throw ex;
             }
 
-            return jsonDES;
+            return json;
         }
 
-        public string CargaAlerta(string usu, string latitud, string longitud, string Image1, string Image2, String Image3)
+        public string CargaAlerta(int usu, String descripcion, String latitud, String longitud, int media, String Image1, String Image2, String Image3)
         {
             SqlCommand cmd;
             string msj = "";
+            int res;
             try
             {
                 Abrir();
 
-                cmd = new SqlCommand("Carga_Alerta", con);//LLAMAMOS AL ESTORED PROCEDURE Y CREAMOS LA CONEXION EN LA BD
+                cmd = new SqlCommand("CargaAlerta", con);//LLAMAMOS AL ESTORED PROCEDURE Y CREAMOS LA CONEXION EN LA BD
                 cmd.CommandType = CommandType.StoredProcedure;
                 //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
                 cmd.Parameters.AddWithValue("@usu", usu);
+                cmd.Parameters.AddWithValue("@descripcion", descripcion);
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
-                cmd.Parameters.AddWithValue("@fecha", System.DateTime.Now);//OBTENEMOS EL LA FECHA Y HORA DEL SISTEMA
-                                                                           //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
+                cmd.Parameters.AddWithValue("@media", media);
+                //INSERTAMOS TODAS LAS IMAGENES AUNQUE ESTAS SEAN =NULL
                 cmd.Parameters.AddWithValue("@Image1", Image1);
                 cmd.Parameters.AddWithValue("@Image2", Image2);
                 cmd.Parameters.AddWithValue("@Image3", Image3);
                 cmd.Parameters.Add("@msj", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
                 //EJECUTAMOS EL METODO Y CACHAMOS EL RESULTADO
+                res = cmd.ExecuteNonQuery();
                 msj = cmd.Parameters["@msj"].Value.ToString();
                 Cerrar();
             }
@@ -197,6 +175,63 @@ namespace ServiceWebAplicacion
             }
             return msj;
 
-        }     
-    }
+        }
+
+        //retorna consultas desde celular
+        public String Find_QPhone(String date, String description, String Nosafety, int selection)//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
+        {
+            DataSet myDataSet = new DataSet();
+            string jsonVa;
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("Query_phone", con);
+                //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
+                cmd.Parameters.AddWithValue("@date", date);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@Nosafety", Nosafety);
+                cmd.Parameters.AddWithValue("@selection", selection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(myDataSet);
+
+                jsonVa = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return jsonVa;
+        }
+
+        //Retorna imagenes de alertas
+        public String Picture_Alerts(String id, int flag)
+        {
+            DataSet myDataSet = new DataSet();
+            string data;
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("Return_Picture", con);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@flag", flag);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(myDataSet);
+
+                data = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+    }    
 }

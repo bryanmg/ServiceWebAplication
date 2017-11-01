@@ -49,3 +49,13 @@ C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\Servi
 C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
 C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
 C:\Users\negro\Desktop\ServiceWebAplicacion\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.csproj.CoreCompileInputs.cache
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.dll
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\obj\Debug\ServiceWebAplicacion.pdb
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.dll
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.pdb
+C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.xml
