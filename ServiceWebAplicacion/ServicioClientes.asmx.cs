@@ -31,8 +31,7 @@ namespace ServiceWebAplicacion
         
         [WebMethod]
         public string InsertarRegistro(String catId, String NumSafety, String descripcion, String latitud, String longitud, int usuario, byte[] Data1, byte[] Data2, byte[] Data3, byte[] Data4, byte[] Data5, byte[] Data6, int imgCount, int vdCount)
-        {
-            //Directory.CreateDirectory(Server.MapPath("~/VideoData/"));
+        {                                                              
             string retorno;
             int media = 0;
             if (imgCount > 0) { media = 1; }
@@ -41,92 +40,98 @@ namespace ServiceWebAplicacion
 
             //GUARDANDO EL VIDEO      
             try
-            {      
+            {
+                string newData1 = Convert.ToBase64String(Data1), newData2 = Convert.ToBase64String(Data2), newData3 = Convert.ToBase64String(Data3),
+                    newData4 = Convert.ToBase64String(Data4), newData5 = Convert.ToBase64String(Data5), newData6 = Convert.ToBase64String(Data6);
+          
                 /*CREANDO ARCHIVO Y GUARDANDO EN DIRECTORIO*/
-
                 for (int i = (imgCount+1); i<=(imgCount+vdCount); i++) {                
                     string nameVideo = usuario.ToString() + "_" + i + "_" + DateTime.Now.ToString("dd-MM-yyyy H-mm-ss") + ".mp4";
-        
                     switch (i) {
-                        case 1:
-                            //byte[] Video1 = Encoding.ASCII.GetBytes(Data1);
+                        case 1:                                              
                             String arquivo1 = Server.MapPath("~/VideoData/") + nameVideo; //Nombre del Video DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") 
                             File.WriteAllBytes(arquivo1, Data1); //se carga el video al servidor  
-                            //Data1 = nameVideo; //para enviarlo a la BD 
+                            newData1 = nameVideo; //para enviarlo a la BD 
                             break;
-                        case 2:
-                            //byte[] Video2 = Encoding.ASCII.GetBytes(Data2);
+                        case 2:                                              
                             String arquivo2 = Server.MapPath("~/VideoData/") + nameVideo;
                             File.WriteAllBytes(arquivo2, Data2);
-                            //Data2 = nameVideo;                 
+                            newData2 = nameVideo;                 
                             break;
-                        case 3:
-                            //byte[] Video3 = Encoding.ASCII.GetBytes(Data3);
+                        case 3:                                               
                             String arquivo3 = Server.MapPath("~/VideoData/") + nameVideo;
                             File.WriteAllBytes(arquivo3, Data3);
-                            //Data3 = nameVideo;
+                            newData3 = nameVideo;
                             break;
-                        case 4:
-                            //byte[] Video4 = Encoding.ASCII.GetBytes(Data4);
+                        case 4:                                               
                             String arquivo4 = Server.MapPath("~/VideoData/") + nameVideo;
                             File.WriteAllBytes(arquivo4, Data4);
-                            //Data4 = nameVideo;
+                            Convert.ToBase64String(Data1);
+                            newData4 = nameVideo;
                             break;
-                        case 5:
-                            //byte[] Video5 = Encoding.ASCII.GetBytes(Data5);
+                        case 5:                                               
                             String arquivo5 = Server.MapPath("~/VideoData/") + nameVideo;
                             File.WriteAllBytes(arquivo5, Data5);
-                            //Data5 = nameVideo;
+                            newData5 = nameVideo;
                             break;
-                        case 6:
-                            //byte[] Video6 = Encoding.ASCII.GetBytes(Data6);
+                        case 6:                                               
                             String arquivo6 = Server.MapPath("~/VideoData/") + nameVideo;
                             File.WriteAllBytes(arquivo6, Data6);
-                            //Data6 = nameVideo;
+                            newData6 = nameVideo;
                             break;
                     }
                 }
-                retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, media, Convert.ToBase64String(Data1), Convert.ToBase64String(Data2), Convert.ToBase64String(Data3), Convert.ToBase64String(Data4), Convert.ToBase64String(Data5), Convert.ToBase64String(Data6), imgCount, vdCount);
-                   
+                retorno = con.InsertarRegistro(catId, NumSafety, descripcion, latitud, longitud, usuario, media, newData1, newData2, newData3, newData4, newData5, newData6, imgCount, vdCount);
+
+                string file;    
                 if (Convert.ToInt32(retorno) == 1) {
                     return Convert.ToString(retorno);
                 }else{
                     for (int i = (imgCount + 1); i <= (imgCount + vdCount); i++)
                     {
-                        //Si existe error elimino los videos del Servidor
-                        string file;
+                        //Si existe error elimino los videos del Servidor          
                         switch (i)
                         {
                             case 1:
-                                file = "~/VideoData/" + Data1;
+                                file = "~/VideoData/" + newData1;
                                 if (File.Exists(HttpContext.Current.Server.MapPath(file))){
                                     File.Delete(HttpContext.Current.Server.MapPath(file));
                                 }                        
                                 break;
                             case 2:
-                                file = "~/VideoData/" + Data2;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                file = "~/VideoData/" + newData2;
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file)))
+                                {
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }
                                 break;
                             case 3:
-                                file = "~/VideoData/" + Data3;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                file = "~/VideoData/" + newData3;
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file)))
+                                {
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }
                                 break;
                             case 4:
-                                file = "~/VideoData/" + Data4;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                file = "~/VideoData/" + newData4;
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file)))
+                                {
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }
                                 break;
                             case 5:
-                                file = "~/VideoData/" + Data5;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                file = "~/VideoData/" + newData5;
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file)))
+                                {
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }
                                 break;
                             case 6:
-                                file = "~/VideoData/" + Data6;
-                                if (File.Exists(file))
-                                    File.Delete(file);
+                                file = "~/VideoData/" + newData6;
+                                if (File.Exists(HttpContext.Current.Server.MapPath(file)))
+                                {
+                                    File.Delete(HttpContext.Current.Server.MapPath(file));
+                                }
                                 break;
                         } 
                     }

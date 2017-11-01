@@ -10,28 +10,43 @@ namespace ServiceWebAplicacion
 
     public class Conexion
     {
-        SqlConnection con;
+        //SqlConnection con;                            
 
-        public Conexion()
+       
+           //   con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
+        private static string cnn = System.Configuration.ConfigurationManager.ConnectionStrings["Connsql"].ToString();
+        private static SqlConnection con;
+        //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Connsql"].ToString());
+    
+        public static Boolean Abrir()
         {
-            if (con == null)
-                //  con = new SqlConnection("Server=SQL5031.SmarterASP.NET;DataBase=DB_9B853E_Servicios;User Id=DB_9B853E_Servicios_admin;password=Leirdadacrca2017");
-                con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
-            //Data Source=SQL5017.SmarterASP.NET;Initial Catalog=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;Password=Leirdadacrca2017;" providerName="System.Data.SqlClient
-            //con = new SqlConnection("Server=LEONCIO1;DataBase=EJEMPLO;User Id=sa;password=1");
-            //con = new SqlConnection("Data Source=.;DataBase=ejemplo;Integrated Security=true");
-            //private static string cadenaConexion = @"Data Source=SQL5007.Smarterasp.net;Initial Catalog=DB_9B853E_REPUVE;User Id=DB_9B853E_REPUVE_admin;Password=Leirdadacrca2014;";
-            //ConnectionStringSettingsCollection settings = ConfigurationManager.ConnectionStrings;
+            Boolean result = false;
+            try
+            {
+                con = new SqlConnection(cnn);
+                con.Open();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error-" + ex);
+            }
+            return result;
         }
 
-        public void Abrir()
+        public static Boolean Cerrar()
         {
-            if (con.State == ConnectionState.Closed) con.Open();
-        }
-
-        public void Cerrar()
-        {
-            if (con.State == ConnectionState.Open) con.Close();
+            Boolean result = false;
+            try
+            {
+                con.Close();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error-" + ex);
+            }
+            return result;
         }
 
         // METODOS
@@ -72,7 +87,7 @@ namespace ServiceWebAplicacion
                 //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
                 cmd.Parameters.AddWithValue("@catId", catId);
                 cmd.Parameters.AddWithValue("@NumSafety", NumSafety);
-                cmd.Parameters.AddWithValue("@descripcion", descripcion);                                      
+                cmd.Parameters.AddWithValue("@descripcion", descripcion);
                 cmd.Parameters.AddWithValue("@latitud", latitud);
                 cmd.Parameters.AddWithValue("@longitud", longitud);
                 cmd.Parameters.AddWithValue("@USU_id", usuario);
@@ -100,7 +115,7 @@ namespace ServiceWebAplicacion
                 throw ex;
             }
             return msj;
-        }   
+        }
 
         public String CatalogoJSON()//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
         {
@@ -112,12 +127,12 @@ namespace ServiceWebAplicacion
             {
                 con.Open();
                 string sql = "SELECT CAT_Id, CAT_Descripcion FROM CAT_Incidentes_Safety";
-                cmd = new SqlCommand(sql, con);   
-                
+                cmd = new SqlCommand(sql, con);
+
                 da.SelectCommand = cmd;
-                da.Fill(myDataSet);   
+                da.Fill(myDataSet);
                 json = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
-                con.Close();  
+                con.Close();
             }
             catch (Exception ex)
             {
@@ -166,21 +181,21 @@ namespace ServiceWebAplicacion
         public String Find_QPhone(String date, String description, String Nosafety, int selection)//metodo para obtener el catalogo de tipos de incidentes y sus descripciones
         {
             DataSet myDataSet = new DataSet();
-            string jsonVa;      
+            string jsonVa;
             SqlCommand cmd;
             try
-            {                       
-                cmd = new SqlCommand("Query_phone", con);      
+            {
+                cmd = new SqlCommand("Query_phone", con);
                 //ASIGNAMOS LOS VALORES QUE LE MANDAREMOS AL METODO EN LA BASE DE DATOS
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@description", description);
                 cmd.Parameters.AddWithValue("@Nosafety", Nosafety);
-                cmd.Parameters.AddWithValue("@selection", selection);               
+                cmd.Parameters.AddWithValue("@selection", selection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataAdapter da = new SqlDataAdapter();
-                da.SelectCommand = cmd;  
-                da.Fill(myDataSet);                                                      
+                da.SelectCommand = cmd;
+                da.Fill(myDataSet);
 
                 jsonVa = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
                 con.Close();
@@ -188,7 +203,7 @@ namespace ServiceWebAplicacion
             catch (Exception ex)
             {
                 throw ex;
-            }        
+            }
             return jsonVa;
         }
 
@@ -200,7 +215,7 @@ namespace ServiceWebAplicacion
             SqlCommand cmd;
             try
             {
-                cmd = new SqlCommand("Return_Picture", con);                           
+                cmd = new SqlCommand("Return_Picture", con);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@flag", flag);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -218,5 +233,5 @@ namespace ServiceWebAplicacion
             }
             return data;
         }
-    }
+    }    
 }

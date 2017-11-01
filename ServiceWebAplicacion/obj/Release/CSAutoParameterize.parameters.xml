@@ -1,2 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters />
+<parameters>
+  <parameter name="Connsql-Web.config Connection String" description="Connsql Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=SQL5017.SmarterASP.NET;Initial Catalog=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\negro\\Desktop\\SSP\ -\ C4\ -\ Colima\\ServiceWebAplication\\ServiceWebAplicacion\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Connsql']/@connectionString" />
+  </parameter>
+</parameters>
