@@ -1,52 +1,35 @@
 ﻿using System;       
 using System.Data.SqlClient;
-using System.Data;       
-using System.Configuration;
+using System.Data;         
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
-                                                                                     
 namespace ServiceWebAplicacion
 {
 
     public class Conexion
-    {
-        //SqlConnection con;                            
+    {               
+        SqlConnection con;
 
-       
-           //   con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
-        private static string cnn = System.Configuration.ConfigurationManager.ConnectionStrings["Connsql"].ToString();
-        private static SqlConnection con;
-        //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Connsql"].ToString());
-    
-        public static Boolean Abrir()
+        public Conexion()
         {
-            Boolean result = false;
-            try
-            {
-                con = new SqlConnection(cnn);
-                con.Open();
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error-" + ex);
-            }
-            return result;
+            if (con == null)
+                //  con = new SqlConnection("Server=SQL5031.SmarterASP.NET;DataBase=DB_9B853E_Servicios;User Id=DB_9B853E_Servicios_admin;password=Leirdadacrca2017");
+                con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
+            //Data Source=SQL5017.SmarterASP.NET;Initial Catalog=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;Password=Leirdadacrca2017;" providerName="System.Data.SqlClient
+            //con = new SqlConnection("Server=LEONCIO1;DataBase=EJEMPLO;User Id=sa;password=1");
+            //con = new SqlConnection("Data Source=.;DataBase=ejemplo;Integrated Security=true");
+            //private static string cadenaConexion = @"Data Source=SQL5007.Smarterasp.net;Initial Catalog=DB_9B853E_REPUVE;User Id=DB_9B853E_REPUVE_admin;Password=Leirdadacrca2014;";
         }
 
-        public static Boolean Cerrar()
+        public void Abrir()
         {
-            Boolean result = false;
-            try
-            {
-                con.Close();
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error-" + ex);
-            }
-            return result;
+            if (con.State == ConnectionState.Closed) con.Open();
+        }
+
+        public void Cerrar()
+        {
+            if (con.State == ConnectionState.Open) con.Close();
         }
 
         // METODOS
@@ -208,11 +191,13 @@ namespace ServiceWebAplicacion
         }
 
         //Retorna imagenes de alertas
-        public String Picture_Alerts(String id, int flag)
+        public DataSet Picture_Alerts(String id, int flag)
         {
             DataSet myDataSet = new DataSet();
             string data;
             SqlCommand cmd;
+            string jsonVa;
+            List<String> Users = new List<String>();
             try
             {
                 cmd = new SqlCommand("Return_Picture", con);
@@ -224,14 +209,30 @@ namespace ServiceWebAplicacion
                 da.SelectCommand = cmd;
                 da.Fill(myDataSet);
 
-                data = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                /*jsonVa = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
                 con.Close();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Users.Add(reader.GetString(0)); //Specify column index 
+                    }
+                }  */
+
+                /*SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                
+                da.Fill(myDataSet);
+
+                data = JsonConvert.SerializeObject(myDataSet); //se usa la libreria Newtonsoft.Json 
+                con.Close(); */
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return data;
+            return myDataSet;
         }
     }    
 }
