@@ -332,13 +332,9 @@ namespace ServiceWebAplicacion
         }
 
         [WebMethod]
-        public String[] Picture_Alerts(String id, int flag)
-        {
-            string[] imgs = new string[5];
-            ArrayList list = new ArrayList();
+        public String Picture_Alerts(String id, int flag)
+        {                                    
             ArrayList binFile = new ArrayList();
-             
-
             DataSet myDataSet = con.Picture_Alerts(id, flag);
                                                    
             DataTable firstTable = myDataSet.Tables[0];    
@@ -350,19 +346,13 @@ namespace ServiceWebAplicacion
                     try
                     {
                         binFile.Add(Convert.ToBase64String(w.DownloadData("http://colorganic-002-site5.itempurl.com/ImageData/" + firstTable.Rows[i]["IMIN_Imagene"].ToString())));
-
-                        //string base64String = Convert.ToBase64String(binFile);
-                        //list.Add(JsonConvert.SerializeObject(base64String));
+                        myDataSet.Tables[0].Rows[i]["IMIN_Imagene"] = binFile[i]; 
                     }
                     catch (Exception ex) { throw ex; }
                 }
-            }
-            for (int i = 0; i < binFile.Count; i++)
-            {
-                imgs[i] = JsonConvert.SerializeObject(binFile[i]);
-
-            }
-            return imgs;
+            }       
+            string ret = JsonConvert.SerializeObject(myDataSet);
+            return ret;
         }    
     
     }
