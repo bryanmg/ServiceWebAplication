@@ -49,3 +49,12 @@ C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicaci
 C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.dll
 C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.pdb
 C:\Users\negro\Desktop\SSP - C4 - Colima\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.xml
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll.config
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.dll
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\ServiceWebAplicacion.pdb
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.dll
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.pdb
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\bin\Newtonsoft.Json.xml
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\obj\Release\ServiceWebAplicacion.csprojResolveAssemblyReference.cache
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\obj\Release\ServiceWebAplicacion.dll
+C:\Users\Black-man\Desktop\BRYAN\SSP - C4\WebService\ServiceWebAplication\ServiceWebAplicacion\obj\Release\ServiceWebAplicacion.pdb
