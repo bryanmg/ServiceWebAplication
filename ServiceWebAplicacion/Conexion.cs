@@ -14,12 +14,7 @@ namespace ServiceWebAplicacion
         public Conexion()
         {
             if (con == null)
-                //  con = new SqlConnection("Server=SQL5031.SmarterASP.NET;DataBase=DB_9B853E_Servicios;User Id=DB_9B853E_Servicios_admin;password=Leirdadacrca2017");
-                con = new SqlConnection("Server=SQL5017.SmarterASP.NET;DataBase=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;password=Leirdadacrca2017");
-            //Data Source=SQL5017.SmarterASP.NET;Initial Catalog=DB_9B853E_sspcolima;User Id=DB_9B853E_sspcolima_admin;Password=Leirdadacrca2017;" providerName="System.Data.SqlClient
-            //con = new SqlConnection("Server=LEONCIO1;DataBase=EJEMPLO;User Id=sa;password=1");
-            //con = new SqlConnection("Data Source=.;DataBase=ejemplo;Integrated Security=true");
-            //private static string cadenaConexion = @"Data Source=SQL5007.Smarterasp.net;Initial Catalog=DB_9B853E_REPUVE;User Id=DB_9B853E_REPUVE_admin;Password=Leirdadacrca2014;";
+                
         }
 
         public void Abrir()
